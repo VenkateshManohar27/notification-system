@@ -1,0 +1,18 @@
+syntax = "proto3";
+package com.ven.design.notification.proto;
+option java_package = "com.ven.design.notification.proto";
+option java_outer_classname = "NotificationProto";
+
+enum NotificationType {
+        EMAIL = 0;
+        SMS = 1;
+        SLACK = 2;
+    }
+message NotificationEvent {
+    int32 id = 1;
+    string message = 2;
+    string clientid = 3;
+    bool read = 4;
+    int64 timestamp = 5;
+    map<string, string> metadata = 6;
+}

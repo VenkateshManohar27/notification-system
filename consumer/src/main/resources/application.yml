@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: consumer
+  kafka:
+    bootstrap-servers: localhost:9092 # Address of the Kafka broker
+    consumer:
+      group-id: notification-group # Consumer group ID
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer # Deserializer for message keys
+      value-deserializer: com.ven.consumer.serializer.NotificationEventDeserializer # Deserializer for message values (e.g., JSON)
+      properties:
+        schema.registry.url: http://localhost:8081

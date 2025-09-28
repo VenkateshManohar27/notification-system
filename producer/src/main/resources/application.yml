@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: producer
+  kafka:
+    bootstrap-servers: localhost:9092 # Address of the Kafka broker
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer # Serializer for message keys
+      value-serializer: com.ven.producer.serializer.NotificationEventSerializer # Serializer for message values (e.g., JSON)
+      properties:
+        acks: all # Acknowledgment level for messages (e.g., all, 0, 1)
+        retries: 3 # Number of retries for failed sends
+        schema.registry.url: http://localhost:8081

@@ -1,0 +1,6 @@
+rootProject.name = 'notification-system'
+include 'configuration'
+include 'model'
+include 'producer'
+include 'consumer'
+
