@@ -37,7 +37,7 @@ public class NotificationProducerService {
         log.info("Producing message to topic {}: {}", topic, dto);
         NotificationEvent event = NotificationEvent.newBuilder()
                 .setId(dto.getId())
-                .setClientid(dto.getClientId())
+                .setClientId(dto.getClientId())
                 .setMessage(dto.getMessage())
                 .setTimestamp(Instant.now().toEpochMilli())
                 .build();

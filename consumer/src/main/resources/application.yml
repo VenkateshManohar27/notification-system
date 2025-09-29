@@ -1,11 +1,41 @@
 spring:
   application:
     name: consumer
+  client-config:
+    baseUrl: http://localhost:8080
+    endpoint: /clients/
   kafka:
     bootstrap-servers: localhost:9092 # Address of the Kafka broker
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer # Serializer for message keys
+      value-serializer: com.ven.consumer.serializer.NotificationEventDeserializer # Serializer for message values (e.g., JSON)
+      email-serializer: com.ven.consumer.serializer.EmailNotificationSerializer
+      sms-serializer: com.ven.consumer.serializer.SmsNotificationSerializer
+      slack-serializer: com.ven.consumer.serializer.SlackNotificationSerializer
+      properties:
+        acks: all # Acknowledgment level for messages (e.g., all, 0, 1)
+        retries: 3 # Number of retries for failed sends
+        schema.registry.url: http://localhost:8081
     consumer:
+      properties:
+        schema.registry.url: http://localhost:8081
+    notification-consumer:
       group-id: notification-group # Consumer group ID
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer # Deserializer for message keys
       value-deserializer: com.ven.consumer.serializer.NotificationEventDeserializer # Deserializer for message values (e.g., JSON)
-      properties:
-        schema.registry.url: http://localhost:8081
+      enabled: false
+    email-consumer:
+      group-id: email-notification-group # Consumer group ID
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer # Deserializer for message keys
+      value-deserializer: com.ven.consumer.serializer.EmailNotificationDeserializer
+      enabled: false
+    sms-consumer:
+      group-id: sms-notification-group # Consumer group ID
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer # Deserializer for message keys
+      value-deserializer: com.ven.consumer.serializer.SmsNotificationDeserializer
+      enabled: false
+    slack-consumer:
+      group-id: slack-notification-group # Consumer group ID
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer # Deserializer for message keys
+      value-deserializer: com.ven.consumer.serializer.SlackNotificationDeserializer
+      enabled: false

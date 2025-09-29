@@ -3,6 +3,13 @@ spring:
     name: consumer
   kafka:
     bootstrap-servers: localhost:9092 # Address of the Kafka broker
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer # Serializer for message keys
+      value-serializer: com.ven.consumer.serializer.NotificationEventSerializer # Serializer for message values (e.g., JSON)
+      properties:
+        acks: all # Acknowledgment level for messages (e.g., all, 0, 1)
+        retries: 3 # Number of retries for failed sends
+        schema.registry.url: http://localhost:8081
     consumer:
       group-id: notification-group # Consumer group ID
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer # Deserializer for message keys

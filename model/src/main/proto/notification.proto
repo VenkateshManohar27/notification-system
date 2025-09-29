@@ -11,8 +11,41 @@ enum NotificationType {
 message NotificationEvent {
     int32 id = 1;
     string message = 2;
-    string clientid = 3;
+    string clientId = 3;
     bool read = 4;
     int64 timestamp = 5;
     map<string, string> metadata = 6;
+}
+
+message EmailNotification {
+    int32 id = 1;
+    string message = 2;
+    string clientId = 3;
+    string recipient = 4;
+    NotificationType type = 5;
+    bool read = 6;
+    int64 timestamp = 7;
+    map<string, string> metadata = 8;
+}
+
+message SmsNotification {
+    int32 id = 1;
+    string message = 2;
+    string clientId = 3;
+    string phoneNumbers = 4;
+    NotificationType type = 5;
+    bool read = 6;
+    int64 timestamp = 7;
+    map<string, string> metadata = 8;
+}
+
+message SlackNotification {
+    int32 id = 1;
+    string message = 2;
+    string clientId = 3;
+    string channel = 4;
+    NotificationType type = 5;
+    bool read = 6;
+    int64 timestamp = 7;
+    map<string, string> metadata = 8;
 }

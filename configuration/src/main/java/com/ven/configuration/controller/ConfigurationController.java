@@ -6,6 +6,7 @@ import com.ven.configuration.service.ConfigurationService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
+import jakarta.websocket.server.PathParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -71,7 +72,7 @@ public class ConfigurationController {
      */
     @GetMapping("/{id}")
     @Operation(summary = "Fetch client configuration by ID")
-    public Client getClientById(@RequestParam String id) {
+    public Client getClientById(@PathVariable String id) {
         log.info("Received request to fetch client configuration for id: {}", id);
         return configurationService.getClientById(id);
     }

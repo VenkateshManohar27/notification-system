@@ -3,6 +3,8 @@ package com.ven.configuration.service;
 import com.ven.configuration.exception.ClientDoesNotExistException;
 import com.ven.configuration.model.Client;
 import com.ven.configuration.model.ClientDto;
+import com.ven.configuration.model.Notification;
+import com.ven.configuration.model.NotificationDto;
 import com.ven.configuration.repository.ConfigurationRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.Conditions;
@@ -78,11 +80,17 @@ public class ConfigurationService {
     }
 
     private Client convertToEntity(ClientDto clientDto) {
-        return modelMapper.map(clientDto, Client.class);
+        Client client = modelMapper.map(clientDto, Client.class);
+        Notification notification = modelMapper.map(clientDto.getNotificationDto(), Notification.class);
+        client.setNotification(notification);
+        return client;
     }
 
     private ClientDto convertToDto(Client client) {
-        return modelMapper.map(client, ClientDto.class);
+        ClientDto clientDto = modelMapper.map(client, ClientDto.class);
+        NotificationDto notification = modelMapper.map(client.getNotification(), NotificationDto.class);
+        clientDto.setNotificationDto(notification);
+        return clientDto;
     }
 
 }
