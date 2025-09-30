@@ -1,4 +1,4 @@
-package com.ven.consumer.service;
+package com.ven.consumer.service.fanout;
 
 import com.ven.design.notification.proto.NotificationProto;
 import lombok.extern.slf4j.Slf4j;
@@ -6,12 +6,12 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
-@Service("emailProducer")
+@Service("emailRouter")
 @Slf4j
-public class EmailProducer implements NotificationProducer {
+public class EmailRouter implements NotificationRouter {
     private final KafkaTemplate<String, NotificationProto.EmailNotification> kafkaTemplate;
 
-    public EmailProducer(@Qualifier("emailKafkaTemplate") KafkaTemplate<String, NotificationProto.EmailNotification> kafkaTemplate) {
+    public EmailRouter(@Qualifier("emailKafkaTemplate") KafkaTemplate<String, NotificationProto.EmailNotification> kafkaTemplate) {
         this.kafkaTemplate = kafkaTemplate;
     }
 
@@ -24,7 +24,7 @@ public class EmailProducer implements NotificationProducer {
                 .setRead(false)
                 .setTimestamp(notification.getTimestamp())
                 .build();
-        log.info("Producing email notification: " + emailNotification);
+        log.info("Route to email notification topic : " + emailNotification);
         kafkaTemplate.send("email-notification", emailNotification);
     }
 }

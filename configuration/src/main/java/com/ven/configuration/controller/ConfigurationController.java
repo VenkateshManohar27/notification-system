@@ -18,11 +18,9 @@ import java.util.List;
 //TODO: Add logging
 //TODO: Add unit tests
 //TODO: Add integration tests
-//TODO: Add Swagger documentation
 //TODO: Add security
 //TODO: Add caching
 //TODO: Reduce usage of streams
-//TODO: Mark objects for deletion
 
 /**
  * Controller for managing client configurations.

@@ -1,6 +1,7 @@
-package com.ven.consumer.service;
+package com.ven.consumer.service.fanout;
 
 import com.ven.consumer.model.Client;
+import com.ven.consumer.service.ClientConfigurationService;
 import com.ven.design.notification.proto.NotificationProto;
 
 import com.ven.design.notification.proto.NotificationProto.NotificationEvent;
@@ -15,15 +16,15 @@ import java.util.stream.Collectors;
 
 @Service
 @Slf4j
-public class NotificationConsumer {
+public class NotificationFanOutService {
 
     private final String notificationTopic = "notification";
     private ClientConfigurationService clientConfigurationService;
 
-    private final NotificationProducerFactory notificationProducerFactory;
+    private final NotificationRouterFactory notificationProducerFactory;
     @Autowired
-    public NotificationConsumer(ClientConfigurationService clientConfigurationService,
-                                NotificationProducerFactory notificationProducerFactory) {
+    public NotificationFanOutService(ClientConfigurationService clientConfigurationService,
+                                     NotificationRouterFactory notificationProducerFactory) {
         this.clientConfigurationService = clientConfigurationService;
         this.notificationProducerFactory = notificationProducerFactory;
     }
@@ -45,18 +46,17 @@ public class NotificationConsumer {
         }
 
         if (clientDto.getNotification().isEmailEnabled()) {
-            this.notificationProducerFactory.getProducer(NotificationProto.NotificationType.EMAIL)
+            this.notificationProducerFactory.getRouter(NotificationProto.NotificationType.EMAIL)
                     .sendNotification(message, clientDto.getNotification().getEmailRecipients().stream().collect(Collectors.joining(",")));
         }
         if (clientDto.getNotification().isPhoneEnabled()) {
-            this.notificationProducerFactory.getProducer(NotificationProto.NotificationType.SMS)
+            this.notificationProducerFactory.getRouter(NotificationProto.NotificationType.SMS)
                     .sendNotification(message, clientDto.getNotification().getPhoneRecipients().stream().collect(Collectors.joining(",")));
         }
 
         if (clientDto.getNotification().isSlackEnabled()) {
-            this.notificationProducerFactory.getProducer(NotificationProto.NotificationType.SLACK)
+            this.notificationProducerFactory.getRouter(NotificationProto.NotificationType.SLACK)
                     .sendNotification(message, clientDto.getNotification().getSlackChannel());
         }
-        // eventProcessor.processEvent(message);
     }
 }

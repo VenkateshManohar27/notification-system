@@ -1,4 +1,4 @@
-package com.ven.consumer.service;
+package com.ven.consumer.service.fanout;
 
 import com.ven.design.notification.proto.NotificationProto;
 import lombok.extern.slf4j.Slf4j;
@@ -6,25 +6,25 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
-@Service("slackProducer")
+@Service("smsRouter")
 @Slf4j
-public class SlackProducer implements NotificationProducer {
-    private final KafkaTemplate<String, NotificationProto.SlackNotification> kafkaTemplate;
+public class SmsRouter implements NotificationRouter {
+    private final KafkaTemplate<String, NotificationProto.SmsNotification> kafkaTemplate;
 
-    public SlackProducer(@Qualifier("slackKafkaTemplate") KafkaTemplate<String, NotificationProto.SlackNotification> kafkaTemplate) {
+    public SmsRouter(@Qualifier("smsKafkaTemplate") KafkaTemplate<String, NotificationProto.SmsNotification> kafkaTemplate) {
         this.kafkaTemplate = kafkaTemplate;
     }
 
     public void sendNotification(NotificationProto.NotificationEvent notification, String recipient) {
-        NotificationProto.SlackNotification slackNotification = NotificationProto.SlackNotification.newBuilder()
+        NotificationProto.SmsNotification smsNotification = NotificationProto.SmsNotification.newBuilder()
                 .setId(notification.getId())
                 .setClientId(notification.getClientId())
                 .setMessage(notification.getMessage())
-                .setChannel(recipient)
+                .setPhoneNumbers(recipient)
                 .setRead(false)
                 .setTimestamp(notification.getTimestamp())
                 .build();
-        log.info("Producing Slack notification: " + slackNotification);
-        kafkaTemplate.send("slack-notification", slackNotification);
+        log.info("Route to SMS notification: {}", smsNotification);
+        kafkaTemplate.send("sms-notification", smsNotification);
     }
 }

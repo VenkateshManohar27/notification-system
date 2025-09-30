@@ -1,7 +1,7 @@
-package com.ven.consumer.service;
+package com.ven.consumer.service.fanout;
 
 import com.ven.design.notification.proto.NotificationProto.NotificationEvent;
 
-public interface NotificationProducer {
+public interface NotificationRouter {
     void sendNotification(NotificationEvent notification, String message);
 }
