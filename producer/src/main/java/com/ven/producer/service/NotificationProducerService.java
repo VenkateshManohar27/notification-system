@@ -21,13 +21,6 @@ public class NotificationProducerService {
     private final KafkaTemplate<String, NotificationEvent> kafkaTemplate;
     private final String topic = "notification";
 
-    /*private final Map<NotificationEvent.NotificationType, String> notificationTypeTopicMap = Map.of(
-            NotificationEvent.NotificationType.EMAIL, "email-notification",
-            NotificationEvent.NotificationType.SMS, "sms-notification",
-            NotificationEvent.NotificationType.SLACK, "slack-notification"
-    );*/
-
-
     @Autowired
     public NotificationProducerService(KafkaTemplate<String, NotificationEvent> kafkaTemplate) {
         this.kafkaTemplate = kafkaTemplate;

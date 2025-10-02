@@ -13,7 +13,7 @@ public class SmsNotificationDeserializer implements Deserializer<SmsNotification
             return SmsNotification.parseFrom(data);
         } catch (InvalidProtocolBufferException e) {
             log.error("Failed to deserialize SmsNotification", e);
-            throw new RuntimeException("exception while parsing");
+            throw new RuntimeException("SMS Notification parsing exception");
         }
     }
 }

@@ -13,7 +13,7 @@ public class SlackNotificationDeserializer implements Deserializer<SlackNotifica
             return SlackNotification.parseFrom(data);
         } catch (InvalidProtocolBufferException e) {
             log.error("Failed to deserialize SlackNotification", e);
-            throw new RuntimeException("exception while parsing");
+            throw new RuntimeException("Slack Notification parsing exception");
         }
     }
 }

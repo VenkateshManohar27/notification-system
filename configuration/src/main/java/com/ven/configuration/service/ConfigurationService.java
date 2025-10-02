@@ -68,7 +68,7 @@ public class ConfigurationService {
         return null;
     }
 
-    @CachePut
+    @CachePut(value = "clients", key = "#id")
     public ClientDto deactivateClient(String id) {
         log.info("Deactivating client configuration for id: {}", id);
         Client existingClient = configurationRepository.findById(id).orElseThrow(() -> new ClientDoesNotExistException("Client not found with id: " + id));

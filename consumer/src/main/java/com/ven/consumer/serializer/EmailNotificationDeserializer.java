@@ -13,7 +13,7 @@ public class EmailNotificationDeserializer implements Deserializer<EmailNotifica
             return EmailNotification.parseFrom(data);
         } catch (InvalidProtocolBufferException e) {
             log.error("Failed to deserialize EmailNotification", e);
-            throw new RuntimeException("excepiton while parsing");
+            throw new RuntimeException("Email Notification parsing exception");
         }
     }
 }

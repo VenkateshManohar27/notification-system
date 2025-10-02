@@ -13,15 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-//TODO: Add validation
-//TODO: Add error handling
-//TODO: Add logging
-//TODO: Add unit tests
-//TODO: Add integration tests
-//TODO: Add security
-//TODO: Add caching
-//TODO: Reduce usage of streams
-
 /**
  * Controller for managing client configurations.
  * Provides endpoints to create, retrieve, and update client configurations.
